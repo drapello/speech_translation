@@ -1,0 +1,48 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>Speech_to_Translation</title>
+  </head>
+  <body>
+    <form action="">
+      <select id="language" name="language">
+        <option value="pt" {% if language == "pt" %} selected {% endif %} >Portuguese</option>
+        <option value="de" {% if language == "de" %} selected {% endif %} >German</option>
+        <option value="en" {% if language == "en" %} selected {% endif %} >English</option>
+        <option value="fr" {% if language == "fr" %} selected {% endif %} >French</option>
+      </select>
+    </form>
+    <h3 style='color: #ccc;font-size: 30px;'>No translation yet..</h3>
+    <div class="message_holder"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+
+
+    $(document).ready(function() {
+
+        var socket = io.connect('http://' + document.domain + ':' + location.port );
+      
+        socket.on('message', function(msg) {
+          var languages = msg
+          var selected_text = languages.find(function(e) { return e.Language === $( "select option:selected" ).val();
+ });
+          console.log(selected_text.Text)
+
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div><b style="color: #000">'+selected_text.Text+'</div>' )
+    
+          $('#language').change(function() {
+            this.form.submit();
+          });
+
+        });   
+
+    });
+
+    </script>
+
+  </body>
+  </html>

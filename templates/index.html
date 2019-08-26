@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Speech to Translation Sample</h1>
+    <p>Click on the recording button bellow to send a massage!!!</p>
+    <p>Details <a href=''>here.</a></p>
+  </div>
+</div>
+
+  <script type="text/javascript">
+  	$(document).ready(function() {
+
+	  	var socket = io.connect('http://' + document.domain + ':' + location.port );
+		
+		socket.on('message', function(msg) {
+			$("#messages").append('<li>'+msg+'</li>');
+			console.log('Received message');
+		});
+
+	});
+
+</script>
+</body>
+</html>
+
+
+
